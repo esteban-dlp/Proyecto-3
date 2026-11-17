@@ -1,0 +1,66 @@
+# invierte la cadena de entrada dentro de la misma cinta
+# las letras a y b sin procesar quedan a la derecha
+# las marcas A y B forman la parte ya procesada a la izquierda
+# cada simbolo sin procesar se inserta al inicio de la parte procesada y el resto se corre una celda a la derecha
+# la memoria guarda el simbolo que se va desplazando
+# al final las marcas se convierten de nuevo en a y b
+q_states:
+  q_list: ['buscar', 'volver', 'desplazar', 'retroceder', 'convertir', 'aceptar']
+  initial: 'buscar'
+  final: 'aceptar'
+alphabet: ['a', 'b']
+tape_alphabet: ['A', 'B', null]
+delta:
+  # buscar el primer simbolo sin procesar y saltar las marcas
+  - params: {initial_state: 'buscar', mem_cache_value: null, tape_input: 'A'}
+    output: {final_state: 'buscar', mem_cache_value: null, tape_output: 'A', tape_displacement: R}
+  - params: {initial_state: 'buscar', mem_cache_value: null, tape_input: 'B'}
+    output: {final_state: 'buscar', mem_cache_value: null, tape_output: 'B', tape_displacement: R}
+  - params: {initial_state: 'buscar', mem_cache_value: null, tape_input: 'a'}
+    output: {final_state: 'volver', mem_cache_value: 'A', tape_output: null, tape_displacement: L}
+  - params: {initial_state: 'buscar', mem_cache_value: null, tape_input: 'b'}
+    output: {final_state: 'volver', mem_cache_value: 'B', tape_output: null, tape_displacement: L}
+  - params: {initial_state: 'buscar', mem_cache_value: null, tape_input: null}
+    output: {final_state: 'retroceder', mem_cache_value: null, tape_output: null, tape_displacement: L}
+  # volver al inicio de las marcas sin cambiar el simbolo guardado
+  - params: {initial_state: 'volver', mem_cache_value: 'A', tape_input: 'A'}
+    output: {final_state: 'volver', mem_cache_value: 'A', tape_output: 'A', tape_displacement: L}
+  - params: {initial_state: 'volver', mem_cache_value: 'A', tape_input: 'B'}
+    output: {final_state: 'volver', mem_cache_value: 'A', tape_output: 'B', tape_displacement: L}
+  - params: {initial_state: 'volver', mem_cache_value: 'B', tape_input: 'A'}
+    output: {final_state: 'volver', mem_cache_value: 'B', tape_output: 'A', tape_displacement: L}
+  - params: {initial_state: 'volver', mem_cache_value: 'B', tape_input: 'B'}
+    output: {final_state: 'volver', mem_cache_value: 'B', tape_output: 'B', tape_displacement: L}
+  - params: {initial_state: 'volver', mem_cache_value: 'A', tape_input: null}
+    output: {final_state: 'desplazar', mem_cache_value: 'A', tape_output: null, tape_displacement: R}
+  - params: {initial_state: 'volver', mem_cache_value: 'B', tape_input: null}
+    output: {final_state: 'desplazar', mem_cache_value: 'B', tape_output: null, tape_displacement: R}
+  # correr las marcas una celda a la derecha el simbolo guardado entra y sale el que estaba en la celda
+  - params: {initial_state: 'desplazar', mem_cache_value: 'A', tape_input: 'A'}
+    output: {final_state: 'desplazar', mem_cache_value: 'A', tape_output: 'A', tape_displacement: R}
+  - params: {initial_state: 'desplazar', mem_cache_value: 'A', tape_input: 'B'}
+    output: {final_state: 'desplazar', mem_cache_value: 'B', tape_output: 'A', tape_displacement: R}
+  - params: {initial_state: 'desplazar', mem_cache_value: 'B', tape_input: 'A'}
+    output: {final_state: 'desplazar', mem_cache_value: 'A', tape_output: 'B', tape_displacement: R}
+  - params: {initial_state: 'desplazar', mem_cache_value: 'B', tape_input: 'B'}
+    output: {final_state: 'desplazar', mem_cache_value: 'B', tape_output: 'B', tape_displacement: R}
+  # la celda vacia al final de las marcas recibe el simbolo guardado y se vuelve a buscar
+  - params: {initial_state: 'desplazar', mem_cache_value: 'A', tape_input: null}
+    output: {final_state: 'buscar', mem_cache_value: null, tape_output: 'A', tape_displacement: R}
+  - params: {initial_state: 'desplazar', mem_cache_value: 'B', tape_input: null}
+    output: {final_state: 'buscar', mem_cache_value: null, tape_output: 'B', tape_displacement: R}
+  # ya no quedan simbolos sin procesar y por eso se regresa al inicio de la cinta
+  - params: {initial_state: 'retroceder', mem_cache_value: null, tape_input: 'A'}
+    output: {final_state: 'retroceder', mem_cache_value: null, tape_output: 'A', tape_displacement: L}
+  - params: {initial_state: 'retroceder', mem_cache_value: null, tape_input: 'B'}
+    output: {final_state: 'retroceder', mem_cache_value: null, tape_output: 'B', tape_displacement: L}
+  - params: {initial_state: 'retroceder', mem_cache_value: null, tape_input: null}
+    output: {final_state: 'convertir', mem_cache_value: null, tape_output: null, tape_displacement: R}
+  # convertir las marcas en las letras originales
+  - params: {initial_state: 'convertir', mem_cache_value: null, tape_input: 'A'}
+    output: {final_state: 'convertir', mem_cache_value: null, tape_output: 'a', tape_displacement: R}
+  - params: {initial_state: 'convertir', mem_cache_value: null, tape_input: 'B'}
+    output: {final_state: 'convertir', mem_cache_value: null, tape_output: 'b', tape_displacement: R}
+  - params: {initial_state: 'convertir', mem_cache_value: null, tape_input: null}
+    output: {final_state: 'aceptar', mem_cache_value: null, tape_output: null, tape_displacement: S}
+simulation_strings: ['aabba', 'bbbaab', 'abaabb', 'ababbb']
