@@ -1,0 +1,33 @@
+# reconoce la misma cantidad de letras a seguidas de letras b
+q_states:
+  q_list: ['inicio', 'buscar_b', 'volver', 'verificar', 'aceptar']
+  initial: 'inicio'
+  final: 'aceptar'
+alphabet: ['a', 'b']
+tape_alphabet: ['X', 'Y', null]
+delta:
+  - params: {initial_state: 'inicio', mem_cache_value: null, tape_input: 'X'}
+    output: {final_state: 'inicio', mem_cache_value: null, tape_output: 'X', tape_displacement: R}
+  - params: {initial_state: 'inicio', mem_cache_value: null, tape_input: 'a'}
+    output: {final_state: 'buscar_b', mem_cache_value: null, tape_output: 'X', tape_displacement: R}
+  - params: {initial_state: 'inicio', mem_cache_value: null, tape_input: 'Y'}
+    output: {final_state: 'verificar', mem_cache_value: null, tape_output: 'Y', tape_displacement: R}
+  - params: {initial_state: 'buscar_b', mem_cache_value: null, tape_input: 'a'}
+    output: {final_state: 'buscar_b', mem_cache_value: null, tape_output: 'a', tape_displacement: R}
+  - params: {initial_state: 'buscar_b', mem_cache_value: null, tape_input: 'Y'}
+    output: {final_state: 'buscar_b', mem_cache_value: null, tape_output: 'Y', tape_displacement: R}
+  - params: {initial_state: 'buscar_b', mem_cache_value: null, tape_input: 'b'}
+    output: {final_state: 'volver', mem_cache_value: null, tape_output: 'Y', tape_displacement: L}
+  - params: {initial_state: 'volver', mem_cache_value: null, tape_input: 'a'}
+    output: {final_state: 'volver', mem_cache_value: null, tape_output: 'a', tape_displacement: L}
+  - params: {initial_state: 'volver', mem_cache_value: null, tape_input: 'X'}
+    output: {final_state: 'volver', mem_cache_value: null, tape_output: 'X', tape_displacement: L}
+  - params: {initial_state: 'volver', mem_cache_value: null, tape_input: 'Y'}
+    output: {final_state: 'volver', mem_cache_value: null, tape_output: 'Y', tape_displacement: L}
+  - params: {initial_state: 'volver', mem_cache_value: null, tape_input: null}
+    output: {final_state: 'inicio', mem_cache_value: null, tape_output: null, tape_displacement: R}
+  - params: {initial_state: 'verificar', mem_cache_value: null, tape_input: 'Y'}
+    output: {final_state: 'verificar', mem_cache_value: null, tape_output: 'Y', tape_displacement: R}
+  - params: {initial_state: 'verificar', mem_cache_value: null, tape_input: null}
+    output: {final_state: 'aceptar', mem_cache_value: null, tape_output: null, tape_displacement: S}
+simulation_strings: ['aaabbb', 'aaaabbbb', 'aabbb', 'ababab']
