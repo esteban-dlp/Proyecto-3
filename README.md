@@ -52,7 +52,6 @@ Si el YAML tiene errores, el programa muestra el problema en la salida de error 
 - `maquinas/reconocedora.yaml`: reconoce el lenguaje a^n b^n con n ≥ 1
 - `maquinas/alteradora.yaml`: invierte la cadena de entrada dentro de la cinta
 - `tests/`: pruebas del lector, la cinta, el motor, la alteradora y el programa principal
-- `PROMPT_COMPANERO.md`: contrato de integración y tareas pendientes
 
 ## Formato del YAML
 
@@ -70,6 +69,10 @@ La memoria inicial es `None`: cada transición se busca con `(estado, memoria, s
 4. Repite hasta que no quedan símbolos sin procesar y luego convierte las marcas de nuevo en `a` y `b`.
 
 Por ejemplo, `ab` pasa por `A` y luego `BA`, y termina en `ba`.
+
+## Video
+
+Enlace al video del proyecto: https://uvggt-my.sharepoint.com/:f:/r/personal/vil24033_uvg_edu_gt/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fvil24033%5Fuvg%5Fedu%5Fgt%2FDocuments%2F6o%2E%20Semestre%2FTDLC%2FVideo%20Proyecto%203&share=cgpUf9DYRQXmSZJNOjdVdoWGEgUCrOpGU6l70BdjV6SaC0fqrQ
 
 ## Casos para el video
 
