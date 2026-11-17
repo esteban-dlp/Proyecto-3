@@ -1,5 +1,7 @@
 # Proyecto 3: simulador de máquinas de Turing
 
+Esteban de la Peña y Martin Villatoro
+
 Proyecto en parejas para Teoría de la Computación. El simulador lee una máquina de Turing de una cinta desde un archivo YAML, ejecuta cada cadena de la configuración y muestra las descripciones instantáneas (IDs), la cinta final y si la cadena fue aceptada o rechazada.
 
 ## Preparación
